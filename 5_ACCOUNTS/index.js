@@ -204,7 +204,7 @@ function withdraw(){
           console.log(chalk.bgRed.black("\n\rNúmero inválido! Não foi possível completar a operação.\n\r"))
           return operation()
         }
-
+        // remove an amount
         if(accountData.balance >= amount){
           accountData.balance = parseFloat(accountData.balance) - parseFloat(amount)
           fs.writeFileSync(
