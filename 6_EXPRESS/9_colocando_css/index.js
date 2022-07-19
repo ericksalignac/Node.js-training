@@ -3,8 +3,6 @@ const app = express()
 const port = 3000 // variável de ambiente
 const path = require('path')
 
-const basePath = path.join(__dirname, 'templates')
-
 const users = require('./users')
 
 // ler o body
@@ -16,6 +14,10 @@ app.use(
 
 app.use(express.json())
 
+// arquivos estáticos
+app.use(express.static('public'))
+
+const basePath = path.join(__dirname, 'templates')
 
 app.use('/users', users)
 
