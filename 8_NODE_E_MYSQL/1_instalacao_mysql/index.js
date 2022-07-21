@@ -25,15 +25,31 @@ app.post('/books/insertbook', (req, res) => {
   const title = req.body.title
   const pageqty = req.body.pageqty
 
-  const sqlQuery = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`
-  conn.query(sqlQuery, function(err) {
+  const insertQuery = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`
+  conn.query(insertQuery, function(err) {
     if(err){
       console.log(err)
+      return
     }
-    res.redirect('/')
+    res.redirect('/books')
   })
 
 } )
+
+app.get('/books', (req, res) => {
+  const selectQuery = "SELECT * FROM books"
+
+  conn.query(selectQuery, function (err, data){
+    if(err){
+      console.log(err)
+      return
+    }
+    const books = data
+    res.render('books', {books})
+  })
+
+
+})
 
 const conn = mysql.createConnection({
   host: "192.168.1.5",
