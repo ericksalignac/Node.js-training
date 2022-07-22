@@ -67,9 +67,9 @@ app.get('/books/:id', (req, res) => {
 
 app.get('/books/edit/:id', (req, res) => {
   const id = req.params.id
-  const idQuery = `SELECT * FROM books WHERE ID = ${id}`
+  const sql = `SELECT * FROM books WHERE ID = ${id}`
 
-  conn.query(idQuery, function (err, data){
+  conn.query(sql, function (err, data){
     if(err){
       console.log(err)
       return
@@ -77,6 +77,22 @@ app.get('/books/edit/:id', (req, res) => {
     const book = data[0]
     res.render('editbook', {book})
   })
+})
+
+app.post('/books/updatebook', (req, res) => {
+  const id = req.body.id
+  const title = req.body.title
+  const pageqty = req.body.pageqty
+
+  const uptadeQuery = `UPDATE books SET title = '${title}', pageqty = '${pageqty}' WHERE ID = ${id}`
+
+  conn.query(uptadeQuery, function (err, data){
+    if(err){
+      console.log(err)
+      return
+    }
+  })
+  res.redirect('/books')
 })
 
 const conn = mysql.createConnection({
