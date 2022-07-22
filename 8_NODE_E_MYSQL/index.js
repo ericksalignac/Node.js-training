@@ -35,7 +35,6 @@ app.post('/books/insertbook', (req, res) => {
     }
     res.redirect('/books')
   })
-
 } )
 
 app.get('/books', (req, res) => {
@@ -49,7 +48,6 @@ app.get('/books', (req, res) => {
     const books = data
     res.render('books', {books})
   })
-
 
 })
 
