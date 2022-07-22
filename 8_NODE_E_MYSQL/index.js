@@ -25,8 +25,10 @@ app.post('/books/insertbook', (req, res) => {
   const title = req.body.title
   const pageqty = req.body.pageqty
 
-  const insertQuery = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`
-  pool.query(insertQuery, function(err) {
+  const insertQuery = `INSERT INTO books (??, ??) VALUES (?, ?)`
+  const data = ['title', 'pageqty', title, pageqty ]
+
+  pool.query(insertQuery, data, function(err) {
     if(err){
       console.log(err)
       return
@@ -53,9 +55,10 @@ app.get('/books', (req, res) => {
 
 app.get('/books/:id', (req, res) => {
   const id = req.params.id
-  const idQuery = `SELECT * FROM books WHERE ID = ${id}`
+  const idQuery = `SELECT * FROM books WHERE ?? = ?`
+  data = ['id', id]
 
-  pool.query(idQuery, function (err, data){
+  pool.query(idQuery, data, function (err, data){
     if(err){
       console.log(err)
       return
@@ -67,9 +70,10 @@ app.get('/books/:id', (req, res) => {
 
 app.get('/books/edit/:id', (req, res) => {
   const id = req.params.id
-  const sql = `SELECT * FROM books WHERE ID = ${id}`
+  const sql = `SELECT * FROM books WHERE ?? = ?`
+  const data = ['id', id]
 
-  pool.query(sql, function (err, data){
+  pool.query(sql, data, function (err, data){
     if(err){
       console.log(err)
       return
@@ -84,9 +88,10 @@ app.post('/books/updatebook', (req, res) => {
   const title = req.body.title
   const pageqty = req.body.pageqty
 
-  const uptadeQuery = `UPDATE books SET title = '${title}', pageqty = '${pageqty}' WHERE ID = ${id}`
+  const uptadeQuery = `UPDATE books SET ?? = ?, ?? = ? WHERE ?? = ?`
+  const data = ['title', title, 'pageqty', pageqty, 'id', id]
 
-  pool.query(uptadeQuery, function (err, data){
+  pool.query(uptadeQuery, data, function (err, data){
     if(err){
       console.log(err)
       return
@@ -97,9 +102,10 @@ app.post('/books/updatebook', (req, res) => {
 
 app.post('/books/remove/:id', (req, res) => {
   id = req.params.id
-  const sql = `DELETE FROM books WHERE id = ${id}`
+  const sql = `DELETE FROM books WHERE ?? = ?`
+  const data = ['id', id]
 
-  pool.query(sql, function (err){
+  pool.query(sql, data, function (err){
     if(err){
       console.log(err)
       return
